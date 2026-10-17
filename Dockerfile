@@ -22,4 +22,4 @@ USER poster
 
 EXPOSE 8000
 # One image, several processes; docker-compose overrides CMD for the worker and the migration job.
-CMD ["uvicorn", "--factory", "app.web.main:create_app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["python", "start_single_host.py"]
