@@ -11,6 +11,8 @@ RUN pip install -r requirements.txt
 COPY app ./app
 COPY migrations ./migrations
 COPY scripts/vendor_htmx.py ./scripts/vendor_htmx.py
+COPY start_single_host.py ./start_single_host.py
+
 # HTMX must be served locally (no CDN at runtime). Use the committed copy, download it only if it is
 # missing, then FAIL the build unless the file exists and matches the pinned SHA-384 checksum.
 RUN python scripts/vendor_htmx.py --if-missing && python scripts/vendor_htmx.py --verify
