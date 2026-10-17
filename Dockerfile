@@ -1,8 +1,8 @@
 FROM python:3.12-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1 \
-    PIP_NO_CACHE_DIR=1
+PYTHONUNBUFFERED=1 \
+PIP_NO_CACHE_DIR=1
 
 WORKDIR /srv
 COPY requirements.txt .
@@ -19,7 +19,7 @@ RUN python scripts/vendor_htmx.py --if-missing && python scripts/vendor_htmx.py 
 
 # No secrets are copied or baked in: configuration arrives as environment variables at run time.
 RUN useradd --system --create-home --uid 10001 poster \
-    && mkdir -p /srv/data && chown -R poster:poster /srv/data
+&& mkdir -p /srv/data && chown -R poster:poster /srv/data
 USER poster
 
 EXPOSE 8000

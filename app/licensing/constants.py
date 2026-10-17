@@ -7,4 +7,4 @@ LICENSE_PUBLIC_KEY = "wdLw5Mvn2VsNKm__-VdHCXRJUx7fESuDpXqqoBlxF9E"
 # False in the seller's working tree. scripts/build_customer_zip.py writes True into the CUSTOMER package. In a release build the
 # license check cannot be switched off by an environment variable (LICENSE_ENFORCEMENT=false is rejected whatever APP_ENV says) and
 # the first-run page always requires a SETUP_TOKEN. Someone who edits the source can still change this; see docs/LICENSING.md.
-RELEASE_BUILD = True
+RELEASE_BUILD = False
