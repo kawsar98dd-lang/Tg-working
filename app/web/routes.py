@@ -230,6 +230,7 @@ from .post_routes import POST_ROUTES  # noqa: E402
 from .schedule_routes import SCHEDULE_ROUTES  # noqa: E402
 from .log_routes import LOG_ROUTES  # noqa: E402
 from .telegram_routes import TELEGRAM_ROUTES  # noqa: E402
+from .safety_routes import SAFETY_ROUTES  # noqa: E402
 
 ROUTES = [
     Route("setup", "GET", "/setup", setup_get, Auth.ANONYMOUS),
@@ -244,4 +245,4 @@ ROUTES = [
     Route("dashboard", "GET", "/", dashboard, Auth.USER, "dashboard.view"),
     Route("account", "GET", "/account", account_get, Auth.USER, "account.manage"),
     Route("account-revoke", "POST", "/account/sessions/revoke-others", account_revoke_others, Auth.USER, "account.manage"),
-] + TELEGRAM_ROUTES + GROUP_ROUTES + POST_ROUTES + SCHEDULE_ROUTES + LOG_ROUTES
+] + TELEGRAM_ROUTES + GROUP_ROUTES + POST_ROUTES + SCHEDULE_ROUTES + LOG_ROUTES + SAFETY_ROUTES

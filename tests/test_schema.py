@@ -1,6 +1,7 @@
 import re
 import sqlite3
 import unittest
+from enum import Enum
 
 from tests.support import SqliteDb, SqliteMigrationDriver, migrated_db
 from app.db import models
@@ -38,7 +39,7 @@ class MigrationRunnerTests(unittest.IsolatedAsyncioTestCase):
         driver = SqliteMigrationDriver(db)
         first = await run_migrations(driver, discover())
         second = await run_migrations(driver, discover())
-        self.assertEqual(first, ["0001_initial", "0002_auth", "0003_telegram_connect", "0004_telegram_groups", "0005_posts", "0006_scheduler"])
+        self.assertEqual(first, ["0001_initial", "0002_auth", "0003_telegram_connect", "0004_telegram_groups", "0005_posts", "0006_scheduler", "0007_safety_notifications"])
         self.assertEqual(second, [])
 
     async def test_modified_migration_is_refused(self):
@@ -67,7 +68,7 @@ class SchemaTests(unittest.IsolatedAsyncioTestCase):
         tables = {r[0] for r in self.c.execute("SELECT name FROM sqlite_master WHERE type='table'")}
         required = {"users", "telegram_accounts", "telegram_sessions", "telegram_groups", "posts", "schedules",
                     "schedule_targets", "posting_jobs", "posting_logs", "settings", "license_activation",
-                    "auth_sessions", "rate_limits", "telegram_login_attempts"}
+                    "auth_sessions", "rate_limits", "telegram_login_attempts", "safety_notifications"}
         self.assertLessEqual(required, tables)
 
     def test_enums_match_check_constraints(self):
@@ -84,6 +85,8 @@ class SchemaTests(unittest.IsolatedAsyncioTestCase):
             ("post_media", "kind"): models.MediaKind,
             ("post_media", "content_type"): models.MediaContentType,
             ("post_media", "storage_backend"): models.StorageBackend,
+            ("safety_notifications", "severity"): Enum("SafetySeverity", {"INFO": "info", "LOW": "low", "REVIEW": "review", "HIGH": "high"}),
+            ("safety_notifications", "status"): Enum("SafetyStatus", {"NEW": "new", "READ": "read", "RESOLVED": "resolved"}),
         }
         found = {}
         for table, body in re.findall(r"CREATE TABLE (\w+) \((.*?)\n\);", SQL, re.S):
