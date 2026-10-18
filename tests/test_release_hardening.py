@@ -180,7 +180,7 @@ class PackageFlagTests(unittest.TestCase):
         target, _ = bcz.build(self.root, self.out)
         with zipfile.ZipFile(target) as zf:
             manifest = json.loads(zf.read("telegram-auto-poster/RELEASE_MANIFEST.json"))
-            self.assertEqual((manifest["product"], manifest["version"], manifest["release_build"]), ("telegram-auto-poster", "0.1.1", True))
+            self.assertEqual((manifest["product"], manifest["version"], manifest["release_build"]), ("telegram-auto-poster", "0.1.3", True))
             self.assertEqual(manifest["license_public_key"], constants.LICENSE_PUBLIC_KEY)
             packed = {n[len("telegram-auto-poster/"):] for n in zf.namelist()} - {"RELEASE_MANIFEST.json"}
             self.assertEqual(set(manifest["files"]), packed)
